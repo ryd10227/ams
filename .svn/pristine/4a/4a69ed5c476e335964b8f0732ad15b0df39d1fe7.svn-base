@@ -1,7 +1,0 @@
-{
-  "name": "bizMOB4Vue",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "vue"
-}

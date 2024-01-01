@@ -16,12 +16,12 @@ export default defineComponent({
         // 카테고리 변경 시 변경값을 store에 저장
         const changeCategory = (category) => { store.commit('setSelectedCategory', category); };
 
-        // HOM1000에서 기기등록 버튼을 통해 이동했을 경우 VueX Store에 저장된 현재 디바이스의 정보(자산종류, 제조사, 모델명)를 불러오고, 아니라면 빈 문자열로 초기화
-        const inputDeviceType = ref(store.state.deviceInfo?.device_type || '');
-        const inputManufacturer = ref(store.state.deviceInfo?.manufacturer || '');
-        const inputModel = ref(store.state.deviceInfo?.model || '');
+        // HOM1000에서 기기등록 버튼을 통해 이동했을 경우 VueX Store에 저장된 현재 디바이스의 정보(플랫폼)를 불러오고, 아니라면 빈 문자열로 초기화
+        const inputModel = ref(store.state.platformInfo || '');
 
         // 기타 입력 필드 데이터
+        const inputManufacturer = ref('');
+        const inputDeviceType = ref('');
         const inputAssetCode = ref('');
         const inputSerialNum = ref('');
         const inputHWCPU = ref('');
@@ -50,11 +50,11 @@ export default defineComponent({
         };
 
         // 페이지 이탈 시 호출됨
-        // HOM1000에서 기기등록 버튼을 통해 현재 페이지로 이동했을 경우 VueX Store에 현재 디바이스의 정보가 저장되어 있어 타 자산 등록 시 방해되므로
-        // 페이지에서 이탈할 때 setDeviceInfo 뮤테이션을 호출헤 현재 디바이스의 정보를 null로 설정
+        // HOM1000에서 기기등록 버튼을 통해 현재 페이지로 이동했을 경우 VueX Store에 현재 디바이스의 플랫폼 정보가 저장되어 있어 타 자산 등록 시 방해되므로
+        // 페이지에서 이탈할 때 setPlatformInfo 뮤테이션을 호출헤 현재 디바이스의 정보를 null로 설정
         onBeforeRouteLeave(async (to, from, next) => {
             if (confirmLeave()) {
-                store.commit('setDeviceInfo', null);
+                store.commit('setPlatformInfo', null);
                 next();
             }
             else {
