@@ -1,0 +1,25 @@
+<!-- 
+인턴 3팀 윤서연
+ -->
+<!-- 로그인 직후 메인 대시보드 페이지 -->
+<ion-content class="contentsWrap">
+    <div class="web_container sub_container">
+        <!-- 차트 -->
+        <ChartAsset />
+
+        <!-- 날짜, hw, sw, 반납일 각각의 간소화 테이블 -->
+        <div class="cont_card">
+            <TableChangePerDate />
+            <div class="home_cont">
+                <TableHW />
+                <TableSW />
+                <TableDueDate />
+            </div>
+
+            <!-- 기기 등록 버튼 -->
+            <div class="home_cont_btn_area">
+                <button type="button" class="btn01" v-on:click="registerDevice"><span>현재 기기를 자산으로 등록하기</span></button>
+            </div>
+        </div>
+    </div>
+</ion-content>

@@ -1,0 +1,140 @@
+{
+	"PRODUCTION": {
+		"VERSION": {
+			"NATIVE": "4.0",
+			"FRONT": "4.0"
+		},
+		"SETTINGS": {
+			"TYPE": "B2C",
+			"APPLICATION_TYPE": "MOBILE",
+			"NOTICE_USE": false
+		},
+		"SECURITY": {
+			"CONTENTS_INTEGRITY": false,
+			"INACTIVITY_SECONDS": 300
+		},
+		"STATUSBAR": {
+			"MODE": "DEFAULT",
+			"BGCOLOR": "FFFFFF",
+			"TEXT_BLIGHT": "BLACK"
+		},
+		"WEBVIEW": {
+			"BACKGROUNDCOLOR": {
+				"NORMAL": "FFFFFFFF",
+				"DIALOG": "00000000"
+			}
+		},
+		"NETWORK": {
+			"FILE": {
+				"CONNECT": 3,
+				"READ": 15
+			},
+			"API": {
+				"CONNECT": 3,
+				"READ": 15
+			},
+			"ENCRYPTIION_USE": false,
+			"DETECT_STAUTS": false
+		},
+		"TESTER": {
+			"DEVICE_ID": [
+				"andbz_b13f8d247128c43c91d2d4d410a94112596fb7e5fb464d93b55e7b9897d7371283667b32a4bafb22baca9d8ae5b3665c1d0c51ec62588f253bd19a7a2c9df4e"
+			]
+		},
+		"PUSH" : {
+			"URL" : "http://218.55.79.93:8390/bizpush/v150/push"
+		}
+	},
+	"DEVELOPMENT": {
+		"VERSION": {
+			"NATIVE": "4.0",
+			"FRONT": "4.0"
+		},
+		"SETTINGS": {
+			"TYPE": "B2C",
+			"APPLICATION_TYPE": "MOBILE",
+			"NOTICE_USE": false
+		},
+		"SECURITY": {
+			"CONTENTS_INTEGRITY": false,
+			"INACTIVITY_SECONDS": 300
+		},
+		"STATUSBAR": {
+			"MODE": "DEFAULT",
+			"BGCOLOR": "FFFFFF",
+			"TEXT_BLIGHT": "BLACK"
+		},
+		"WEBVIEW": {
+			"BACKGROUNDCOLOR": {
+				"NORMAL": "FFFFFFFF",
+				"DIALOG": "00000000"
+			}
+		},
+		"NETWORK": {
+			"FILE": {
+				"CONNECT": 3,
+				"READ": 15
+			},
+			"API": {
+				"CONNECT": 3,
+				"READ": 15
+			},
+			"ENCRYPTIION_USE": false,
+			"DETECT_STAUTS": false
+		},
+		"TESTER": {
+			"DEVICE_ID": [
+				"andbz_b13f8d247128c43c91d2d4d410a94112596fb7e5fb464d93b55e7b9897d7371283667b32a4bafb22baca9d8ae5b3665c1d0c51ec62588f253bd19a7a2c9df4e"
+			]
+		},
+		"PUSH" : {
+			"URL" : "http://218.55.79.93:8390/bizpush/v150/push"
+		}
+	},
+	"UAT": {
+		"VERSION": {
+			"NATIVE": "4.0",
+			"FRONT": "4.0"
+		},
+		"SETTINGS": {
+			"TYPE": "B2C",
+			"APPLICATION_TYPE": "MOBILE",
+			"NOTICE_USE": false
+		},
+		"SECURITY": {
+			"CONTENTS_INTEGRITY": false,
+			"INACTIVITY_SECONDS": 300
+		},
+		"STATUSBAR": {
+			"MODE": "DEFAULT",
+			"BGCOLOR": "FFFFFF",
+			"TEXT_BLIGHT": "BLACK"
+		},
+		"WEBVIEW": {
+			"BACKGROUNDCOLOR": {
+				"NORMAL": "FFFFFFFF",
+				"DIALOG": "00000000"
+			}
+		},
+		"NETWORK": {
+			"FILE": {
+				"CONNECT": 3,
+				"READ": 15
+			},
+			"API": {
+				"CONNECT": 3,
+				"READ": 15
+			},
+			"ENCRYPTIION_USE": false,
+			"DETECT_STAUTS": false
+		},
+		"TESTER": {
+			"DEVICE_ID": [
+				"andbz_b13f8d247128c43c91d2d4d410a94112596fb7e5fb464d93b55e7b9897d7371283667b32a4bafb22baca9d8ae5b3665c1d0c51ec62588f253bd19a7a2c9df4e"
+			]
+		},
+		"PUSH" : {
+			"URL" : "http://218.55.79.93:8390/bizpush/v150/push"
+		}
+	}
+}

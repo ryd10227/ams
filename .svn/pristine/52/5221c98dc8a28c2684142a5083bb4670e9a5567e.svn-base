@@ -1,0 +1,14 @@
+<ion-page>
+    <ion-header :translucent="false" collapse="condense" >
+        <ion-toolbar>
+            <ion-title>bizMOB4Vue</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content :fullscreen="true">
+        <div id="container">
+            <strong>This is intro Page.</strong><br>
+            <ion-button expand="block" v-on:click="apitest">bizMOB.Window.openMediaPicker</ion-button>
+        </div>
+    </ion-content>
+</ion-page>  

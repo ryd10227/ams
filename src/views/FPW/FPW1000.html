@@ -1,0 +1,37 @@
+<!-- 
+인턴 3팀 윤서연
+ -->
+<!-- 비밀번호 찾기 페이지 -->
+<ion-page class="page_wrapper Login_page">
+    <ion-header class="headerWrap">
+        <div class="titleBar">
+            <!-- 뒤로가기 버튼 -->
+            <div class="title_btn">
+                <button type="button" class="btn_head_prev text" @click="$router.back()"></button>
+            </div>
+        </div>
+    </ion-header>
+
+    <!-- 이메일 입력창 -->
+    <ion-content class="contentsWrap">
+        <fieldset>
+            <legend>Login</legend>
+            <h1>AMS asset management system</h1>
+            <div class="login_inp_row email" :class="{ error: !mailSent }">
+                <input type="email" id="email" placeholder="이메일 입력" v-model="userEmail" />
+            </div>
+            <p class="txt_inp_guide">{{ mailSendError }}</p>
+
+            <div class="btn_area">
+                <button type="button" class="btn_login" @click="findClick" :disabled="countingDown">
+                    <span v-show="!countingDown">보내기</span>
+                    <span v-show="countingDown">{{ countdown }}</span>
+                </button>
+            </div>
+        </fieldset>
+    </ion-content>
+
+    <ion-footer>
+        <p class="copyright">© 2023 Mobile C&amp;C Corp. All Rights Reserved</p>
+    </ion-footer>
+</ion-page>

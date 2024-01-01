@@ -1,0 +1,41 @@
+<template>
+  <ion-app>
+    <ion-router-outlet />
+  </ion-app>
+</template>
+
+<script lang="ts">
+import { IonApp, IonRouterOutlet } from '@ionic/vue';
+import { defineComponent } from 'vue';
+import store from './store'
+import LocaleService from './shared/bizMOB/LocaleService';
+
+export default defineComponent({
+  name: 'App',
+  components: {
+    IonApp,
+    IonRouterOutlet
+  },
+  setup(){
+    const localsv = new LocaleService();
+    
+    return {
+      state: store.state, localsv
+    }
+  },
+  mounted(){
+    this.localsv.initLocale();  
+    this.$bizMOB.addEvent("ready", this.vueInit);
+  },
+  watch: {
+    '$i18n.locale': function(newLocaleCd, oldLocaleCd) {
+      this.localsv.changeLocale(newLocaleCd);
+    }
+  },
+  methods : {
+    vueInit(){
+      this.$logger.log(this.$bizMOB.Properties.get({_sKey : "ddd"}));
+    }
+  }
+});
+</script>

@@ -1,0 +1,29 @@
+<!-- 
+인턴 3팀 윤서연
+ -->
+<!-- 로그인 이후 대시보드, 자산 리스트, 자산 추가 페이지에 적용되는 틀. 네비게이션 바와 그에 따른 페이지 전환 영역, 로그아웃 버튼 -->
+<ion-page class="page_wrapper">
+    <ion-header class="headerWrap">
+        <div class="titleBar">
+            <!-- dashboard, list 간 라우터 이동 -->
+            <div class="title_nav">
+                <button type="button" class="btn_head_home" :class="{ 'on': $route.path === '/main/dashboard' }"
+                    @click="$router.replace('/main/dashboard')"></button>
+                <button type="button" class="btn_head_list"
+                    :class="{ 'on': $route.path.startsWith('/main/list') || $route.path.startsWith('/main/add') }"
+                    @click="$router.replace('/main/list')"></button>
+            </div>
+
+            <!-- 로그아웃 버튼 -->
+            <div class="title_btn right">
+                <button type="button" class="btn_head_logout" @click="logout"></button>
+            </div>
+
+            <!-- 자산 추가 페이지에서 표시할 뒤로가기 버튼 -->
+            <div class="title_btn" v-show="$store.state.currentPath === '/main/add'">
+                <button type="button" class="btn_head_prev" @click="$router.replace('/main/list')"></button>
+            </div>
+        </div>
+    </ion-header>
+    <router-view></router-view>
+</ion-page>

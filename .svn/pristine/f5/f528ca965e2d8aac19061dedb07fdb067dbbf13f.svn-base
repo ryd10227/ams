@@ -1,0 +1,28 @@
+import { createRouter, createWebHistory } from '@ionic/vue-router';
+import { RouteRecordRaw } from 'vue-router';
+import RootRouter from './RootRouter';
+
+const routes: Array<RouteRecordRaw> = ([] as Array<RouteRecordRaw>).concat(RootRouter);
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+});
+
+/**
+ * 네비게이션 가드 설정
+ * to: 이동할 url
+ * from: 현재 url
+ * next: to에서 지정한 url로 이동하기 위해 호출하는 함수
+ */
+router.beforeEach((to, from, next) => {
+  // Backbutton Default Event Setup
+  window.bizMOB.setEvent("backbutton", () => {
+    router.back();
+  });
+
+  // 인자에 path를 넣으면 해당 path로 강제 이동 (Ex. 로그인 필요페이지 접근시 로그인 화면 호출 -- next("/login"))
+  next();
+});
+
+export default router

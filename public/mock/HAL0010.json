@@ -1,0 +1,58 @@
+{
+    "header": {
+        "result": true,
+        "error_code": "",
+        "error_text": "",
+        "trcode": "HAL0010"
+    },
+    "body": [
+        {
+            "hihi": "dkdkdk",
+            "ASSET_CODE": "asset_code_1",
+            "ASSET_TYPE": "monitor",
+            "DUE_DATE": "2023-12-31",
+            "DEPARTMENT": "전략채널팀",
+            "CUR_USER": "윤서연"
+        },
+        {
+            "hihi": "example2",
+            "ASSET_CODE": "asset_code_2",
+            "ASSET_TYPE": "keyboard",
+            "DUE_DATE": "2023-11-30",
+            "DEPARTMENT": "기술지원팀",
+            "CUR_USER": "김예진"
+        },
+        {
+            "hihi": "example3",
+            "ASSET_CODE": "asset_code_3",
+            "ASSET_TYPE": "laptop",
+            "DUE_DATE": "2023-12-15",
+            "DEPARTMENT": "경영지원팀",
+            "CUR_USER": "이준서"
+        },
+        {
+            "hihi": "example4",
+            "ASSET_CODE": "asset_code_4",
+            "ASSET_TYPE": "printer",
+            "DUE_DATE": "2023-12-20",
+            "DEPARTMENT": "인프라팀",
+            "CUR_USER": "박민지"
+        },
+        {
+            "hihi": "example5",
+            "ASSET_CODE": "asset_code_5",
+            "ASSET_TYPE": "mouse",
+            "DUE_DATE": "2023-12-10",
+            "DEPARTMENT": "개발팀",
+            "CUR_USER": "홍길동"
+        },
+        {
+            "hihi": "example6",
+            "ASSET_CODE": "asset_code_6",
+            "ASSET_TYPE": "desktop",
+            "DUE_DATE": "2023-12-25",
+            "DEPARTMENT": "디자인팀",
+            "CUR_USER": "김하늘"
+        }
+    ]
+}

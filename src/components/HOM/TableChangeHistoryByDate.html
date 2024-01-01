@@ -1,0 +1,67 @@
+<!-- 
+인턴 3팀 윤서연
+ -->
+<!-- 대시보드 페이지 중 날짜별 변경이력 테이블 컴포넌트 -->
+
+<!-- 캘린더 -->
+<v-date-picker class="home_calendar" v-model="datePicker" :picker-date="datePicker"
+  @update:model-value="dataChanged"></v-date-picker>
+<div class="home_cont">
+  <div class="title">
+    <h3 class="tit date"> <strong>
+        <!-- 캘린더에서 선택된 날짜를 표시 -->
+        <CalendarDate class="CalendarDate" :PickedDate='pickedData' />
+      </strong></h3>
+    <h3 class="tit date">변경이력</h3>
+    <div class="opt">
+      <button type="button" class="btn_more" @click="more"><span>더보기</span></button>
+    </div>
+  </div>
+
+  <!-- 날짜별 추가, 수정, 삭제 내역의 개수 -->
+  <div class="info">
+    <dl>
+      <dt>추가</dt>
+      <dd><span>{{ isAdded }}</span></dd>
+    </dl>
+    <dl>
+      <dt>수정</dt>
+      <dd class="txtc_blue"><span>{{ isModified }}</span></dd>
+    </dl>
+    <dl>
+      <dt>삭제</dt>
+      <dd class="txtc_red"><span>{{ isDeleted }}</span></dd>
+    </dl>
+  </div>
+  <div class="tableWrap">
+    <table class="table01">
+      <colgroup>
+        <col style="width: 25%;" />
+        <col style="width: 25%;" />
+        <col style="width: 25%;" />
+        <col style="width: 25%;" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">자산종류</th>
+          <th scope="col">사용자</th>
+          <th scope="col">자산상태</th>
+          <th scope="col">변경구분</th>
+        </tr>
+      </thead>
+      <!-- 날짜별 추가, 수정, 삭제 내역 -->
+      <tbody>
+        <tr v-for="(item, index) in recentDateItems" :key="index">
+          <td><span>{{ item.inputDeviceType || '-' }}</span></td>
+          <td><span>{{ item.inputUser || '-' }}</span></td>
+          <td><span>{{ item.inputAssetState || '-' }}</span></td>
+          <td>
+            <span v-if="item.editType === 'isAdded'">추가</span>
+            <span v-else-if="item.editType === 'isModified'">수정</span>
+            <span v-else>삭제</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

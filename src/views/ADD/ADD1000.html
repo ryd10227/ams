@@ -1,0 +1,202 @@
+<!-- 
+인턴 3팀 윤서연
+ -->
+<!-- 자산 신규 등록 페이지 -->
+<ion-content class="contentsWrap">
+    <div class="searchWrap">
+        <!-- 하드웨어 / 소프트웨어 선택 버튼 -->
+        <div class="search_row tab">
+            <label>
+                <input type="radio" id="hw" name="category" v-model="selectedCategory" value="hw"
+                    @click="changeCategory('hw')" /><span>하드웨어</span>
+            </label>
+            <label>
+                <input type="radio" id="sw" name="category" v-model="selectedCategory" value="sw"
+                    @click="changeCategory('sw')" /><span>소프트웨어</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="web_container sub_container">
+        <div class="cont_card pd">
+            <!-- 자산 정보 입력창 -->
+            <div class="reg_from">
+                <dl>
+                    <dt> 자산코드 </dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputAssetCode" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>자산종류</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputDeviceType" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>제조사</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputManufacturer" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>S/N</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputSerialNum" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl v-if="selectedCategory !== 'sw'">
+                    <dt>모델명</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputModel" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl v-if="selectedCategory !== 'sw'">
+                    <dt>CPU</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputHWCPU" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl v-if="selectedCategory !== 'sw'">
+                    <dt>SSD</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputHWSSD" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl v-if="selectedCategory !== 'sw'">
+                    <dt>HDD</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputHWHDD" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl v-if="selectedCategory !== 'sw'">
+                    <dt>메모리</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputHWMemory" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>자산상태</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputAssetState" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl v-if="selectedCategory !== 'sw'">
+                    <dt>위치</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputHWLocation" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>부서</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputDepartment" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>현사용자</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputUser" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>전사용자</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputExUser" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>구매일</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="date" v-model="inputBuyDate" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>지급일</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="date" v-model="inputPayDate" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl v-if="selectedCategory === 'sw'">
+                    <dt>만료일</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="date" v-model="inputSWExpireDate" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl v-if="selectedCategory !== 'sw'">
+                    <dt>반납기한</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="date" v-model="inputHWExpectedReturnDate" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>반납일</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="date" v-model="inputReturnedDate" disabled />
+                        </div>
+                    </dd>
+                </dl>
+                <dl v-if="selectedCategory !== 'sw'">
+                    <dt>사용기간</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputPeriodOfUse" disabled />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>비고</dt>
+                    <dd>
+                        <div class="inp_box">
+                            <input type="text" v-model="inputNote" />
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+
+            <!-- 저장 / 취소 버튼 -->
+            <div class="c_btn">
+                <button type="button" class="btn01" @click="saveData"><span>저장</span></button>
+                <button type="button" class="btn01 cancel"
+                    @click="this.$router.replace('/main/list')"><span>취소</span></button>
+            </div>
+        </div>
+    </div>
+</ion-content>

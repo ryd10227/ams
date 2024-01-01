@@ -1,0 +1,24 @@
+<!-- 
+인턴 3팀 윤서연
+ -->
+<!-- 대시보드 페이지 중 top5 hw,sw 자산 차트 컴포넌트 -->
+<!-- 총 자산, 하드웨어 자산, 소프트웨어 자산의 개수와 각 카테고리의 top5 자산종류를 표시하는 차트 -->
+<div class="home_chart">
+    <swiper :modules="modules" :pagination="true" :space-between="30">
+        <swiper-slide>
+            <h2 class="tit">
+                <img src="@/assets/images/icon_chart.svg"> 자산 현황
+                <sub>총 자산 <span class="txtc_red">{{ totalAssets }}</span></sub>
+                <sub>HW <span class="txtc_red">{{ hwAssetsCount }}</span></sub>
+            </h2>
+            <canvas id="hwChart" width="310" height="200"></canvas>
+        </swiper-slide>
+        <swiper-slide>
+            <h2 class="tit"><img src="@/assets/images/icon_chart.svg"> 자산 현황
+                <sub>총 자산 <span class="txtc_red"> {{ totalAssets }}</span></sub>
+                <sub>SW <span class="txtc_red">{{ swAssetsCount }}</span></sub>
+            </h2>
+            <canvas id="swChart" width="310" height="200"></canvas>
+        </swiper-slide>
+    </swiper>
+</div>
