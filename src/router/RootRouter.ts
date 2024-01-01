@@ -1,5 +1,3 @@
-// 인턴 3팀 윤서연
-
 import Login from '../views/LOG/LOG1000.vue';
 import FPW from '../views/FPW/FPW1000.vue';
 import MainFrame from '../views/MFR/MFR1000.vue';

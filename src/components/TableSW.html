@@ -1,9 +1,6 @@
-<!-- 
-인턴 3팀 윤서연
- -->
-<!-- 대시보드 페이지 중 하드웨어 자산 변경이력 테이블 컴포넌트 -->
+<!-- 대시보드 페이지 중 소프트웨어 자산 변경이력 테이블 컴포넌트 -->
 <div class="title">
-    <h3 class="tit date"><img src="@/assets/images/icon_hw.svg"> 하드웨어 변경이력</h3>
+    <h3 class="tit date"><img src="@/assets/images/icon_sw.svg"> 소프트웨어 변경이력</h3>
     <div class="opt">
         <button type="button" class="btn_more" @click="more"><span>더보기</span></button>
     </div>
@@ -19,17 +16,17 @@
             <tr>
                 <th scope="col">자산종류</th>
                 <th scope="col">사용자</th>
-                <th scope="col">반납기한</th>
+                <th scope="col">만료일</th>
             </tr>
         </thead>
-        <!-- 하드웨어 자산의 수정 내역을 최신순으로 5개 보여줌 -->
+        <!-- 소프트웨어 자산의 수정 내역을 최신순으로 5개 보여줌 -->
         <tbody>
-            <tr v-for="(item, index) in recentHWItems" :key="index">
+            <tr v-for="(item, index) in recentSWItems" :key="index">
                 <td><span>{{ item.inputDeviceType || '-' }}</span></td>
                 <td><span>{{ item.inputUser || '-' }}</span></td>
                 <td>
                     <div class="data_return">
-                        <span>{{ item.inputHWExpectedReturnDate || '-' }}</span>
+                        <span>{{ item.inputSWExpireDate || '-' }}</span>
                     </div>
                 </td>
             </tr>

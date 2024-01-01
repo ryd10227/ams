@@ -1,7 +1,4 @@
-<!-- 
-인턴 3팀 윤서연
- -->
- <!-- 대시보드 페이지 중 반납기한 임박 테이블 컴포넌트 -->
+<!-- 대시보드 페이지 중 반납기한 임박 테이블 컴포넌트 -->
 <template src="./TableDueDate.html"></template>
 <script lang="ts">
 import { defineComponent } from "vue";

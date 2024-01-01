@@ -1,6 +1,3 @@
-<!-- 
-인턴 3팀 윤서연, 소소휘
- -->
 <template src="./FPW1000.html"></template>
 <script lang="ts">
 import { defineComponent, ref } from "vue";
@@ -34,8 +31,7 @@ export default defineComponent({
 				this.countdown = count;
 				count--;
 
-				if (count < 0) 
-				{
+				if (count < 0) {
 					clearInterval(intervalId);
 					this.countingDown = false;
 					this.countdown = 10; // 초기값으로 리셋
@@ -47,13 +43,11 @@ export default defineComponent({
 			// 이메일 정규식 표현 -> 예외 처리(. 중복 허용 x, 도메인 중복 허용 x)
 			var pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+([a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$/;
 
-			if (email.search(/\s/) !== -1) 
-			{
+			if (email.search(/\s/) !== -1) {
 				// 공백 포함할 경우 예외 처리
 				return -1;
 			}
-			else 
-			{
+			else {
 				// test 결과 return -> true or false
 				return pattern.test(email);
 			}
@@ -64,35 +58,29 @@ export default defineComponent({
 			// 서버에 전문 요청
 			console.log("userEmail = ", this.userEmail);
 
-			if (!this.userEmail) 
-			{
+			if (!this.userEmail) {
 				// 이메일 입력 확인
 				this.mailSent = false;
 				this.mailSendError = "이메일을 입력해주세요.";
 			}
-			else 
-			{
-				if (!this.isValidEmail(this.userEmail)) 
-				{
+			else {
+				if (!this.isValidEmail(this.userEmail)) {
 					// 이메일 형식에 맞지 않을 경우
 					this.mailSent = false;
 					this.mailSendError = "이메일 형식에 알맞게 입력해주세요.";
 				}
-				else if (this.isValidEmail(this.userEmail) == -1) 
-				{
+				else if (this.isValidEmail(this.userEmail) == -1) {
 					// 입력된 이메일 주소에 공백이 포함되어있을 경우
 					this.mailSent = false;
 					this.mailSendError = "이메일 주소에 공백이 포함되어있습니다. 다시 입력해주세요.";
 				}
-				else 
-				{
+				else {
 					// 서버로부터 응답 받았는지 확인하는 변수
 					let isResponseReceived = false;
 
 					// timeout 5초로 설정
 					const timeoutId = setTimeout(() => {
-						if (!isResponseReceived) 
-						{
+						if (!isResponseReceived) {
 							this.mailSendError = "서버 응답이 지연되고 있습니다. 잠시 후 다시 시도해주세요.";
 						}
 					}, 5000);
@@ -102,70 +90,68 @@ export default defineComponent({
 					var networkPath = address.replace('/fpw', '/'); // ip 및 port 번호만 남도록 처리하기
 
 					this.pageUrl = networkPath + "loading";
-					this.$bizMOB.Network.requestTr({
-						"_sTrcode": "AGY0200",
-						"_oHeader": {
-							"is_cryption": false,
-							"error_code": "",
-							"error_text": "",
-							"info_text": "",
-							"login_session_id": "",
-							"message_version": "",
-							"result": false,
-							"trcode": "AGY0200"
-						},
-						"_oBody": {
-							"mailAddress": this.userEmail,
-							"domainUrl": this.pageUrl
-						},
-						"_fCallback": (resAGY0200) => {
-							try
-							{
-								isResponseReceived = true; // 서버로부터 응답 받았으면 true
+					// this.$bizMOB.Network.requestTr({
+					// 	"_sTrcode": "AGY0200",
+					// 	"_oHeader": {
+					// 		"is_cryption": false,
+					// 		"error_code": "",
+					// 		"error_text": "",
+					// 		"info_text": "",
+					// 		"login_session_id": "",
+					// 		"message_version": "",
+					// 		"result": false,
+					// 		"trcode": "AGY0200"
+					// 	},
+					// 	"_oBody": {
+					// 		"mailAddress": this.userEmail,
+					// 		"domainUrl": this.pageUrl
+					// 	},
+					// 	"_fCallback": (resAGY0200) => {
+					// 		try {
+					// 			isResponseReceived = true; // 서버로부터 응답 받았으면 true
 
-								if (resAGY0200.header.result == true) 
-								{
-									// 통신 성공
-									console.log('메일발송성공')
-									this.mailSendError = "메일을 발송했습니다. 확인해주세요.";
-									this.mailSent = true;
-								}
-								else {
-									this.mailSent = false;
-									// 통신 오류 시 오류 코드 처리하는 부분
-									switch (resAGY0200.header.error_code) {
-										case "ERR2000":
-											alert("어댑터 처리 중 오류가 발생했습니다. 관리자에게 문의하세요.")
-											this.mailSendError = "메일 전송에 실패했습니다. 메일주소를 다시 확인해주세요.";
-											break;
-										case "ERR2001":
-											this.mailSendError = "토큰 설정에 실패했습니다. 관리자에게 문의하세요";
-											break;
-										case "ERR2002":
-											this.mailSendError = "유효하지 않은 메일 주소입니다. 확인 후 다시 입력해주세요.";
-											break;
-										default:
-											this.mailSendError = "서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요.";
-											break;
-									}
-								}
-								this.$http.post(address, resAGY0200)
-									.then(response => {
-										// 성공적인 응답 처리
-										console.log(response.data);
-									})
-									.catch(error => {
-										console.error('Internal Server Error 발생');
-									});
+					// 			if (resAGY0200.header.result == true) {
+					// 				// 통신 성공
+					// 				console.log('메일발송성공')
+					// 				this.mailSendError = "메일을 발송했습니다. 확인해주세요.";
+					// 				this.mailSent = true;
+					// 			}
+					// 			else {
+					// 				this.mailSent = false;
+					// 				// 통신 오류 시 오류 코드 처리하는 부분
+					// 				switch (resAGY0200.header.error_code) {
+					// 					case "ERR2000":
+					// 						alert("어댑터 처리 중 오류가 발생했습니다. 관리자에게 문의하세요.")
+					// 						this.mailSendError = "메일 전송에 실패했습니다. 메일주소를 다시 확인해주세요.";
+					// 						break;
+					// 					case "ERR2001":
+					// 						this.mailSendError = "토큰 설정에 실패했습니다. 관리자에게 문의하세요";
+					// 						break;
+					// 					case "ERR2002":
+					// 						this.mailSendError = "유효하지 않은 메일 주소입니다. 확인 후 다시 입력해주세요.";
+					// 						break;
+					// 					default:
+					// 						this.mailSendError = "서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요.";
+					// 						break;
+					// 				}
+					// 			}
+					// 			this.$http.post(address, resAGY0200)
+					// 				.then(response => {
+					// 					// 성공적인 응답 처리
+					// 					console.log(response.data);
+					// 				})
+					// 				.catch(error => {
+					// 					console.error('Internal Server Error 발생');
+					// 				});
 
-								clearTimeout(timeoutId); // 통신이 될 경우 timeout 없애기
-							}
-							catch (error) {
-								// 서버 통신 오류 처리
-								this.mailSendError = "서버와의 통신에 실패하였습니다. 관리자에게 문의하세요.";
-							}
-						}
-					});
+					// 			clearTimeout(timeoutId); // 통신이 될 경우 timeout 없애기
+					// 		}
+					// 		catch (error) {
+					// 			// 서버 통신 오류 처리
+					// 			this.mailSendError = "서버와의 통신에 실패하였습니다. 관리자에게 문의하세요.";
+					// 		}
+					// 	}
+					// });
 				}
 			}
 		},

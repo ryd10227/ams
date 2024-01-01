@@ -1,6 +1,3 @@
-<!-- 
-인턴 3팀 윤서연, 소소휘
- -->
  <!-- 대시보드 페이지 중 top5 hw,sw 자산 차트 컴포넌트 -->
 <template src="./ChartAsset.html"></template>
 <script lang="ts">

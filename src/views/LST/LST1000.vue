@@ -1,7 +1,3 @@
-<!-- 
-인턴 3팀 윤서연
- -->
-<!-- 대시보드 전문 미완성으로, import된 모든 컴포넌트가 전문 완성 전 VueX Store를 사용해 자산 정보를 저장하고(ADD1000.vue 최하단 주석) 저장된 데이터를 받아와 대시보드에 반영하는 소스임 -->
 <template src="./LST1000.html"></template>
 <script lang="ts">
 
@@ -71,32 +67,32 @@ export default defineComponent({
         // 서버에서 데이터 가져오기
         const fetchDataFromServer = (typeFilter) => {
             return new Promise((resolve) => {
-                window.bizMOB.Network.requestTr({
-                    "_sTrcode": "AGY0600",
-                    "_oHeader": {
-                        "is_cryption": false,
-                        "error_code": "",
-                        "error_text": "",
-                        "info_text": "",
-                        "login_session_id": "",
-                        "message_version": "",
-                        "result": false,
-                        "trcode": "AGY0600"
-                    },
-                    "_oBody": {
-                        "pageNum": "1",
-                        "sortColumn": "ASSET_CODE",
-                        "sortOrder": "ASC",
-                        "typeFilter": typeFilter
-                    },
-                    "_fCallback": (resAGY0600) => {
-                        const res = [JSON.parse(JSON.stringify(resAGY0600.body.assetList))];
-                        const startIdx = page * batchSize;
-                        const endIdx = startIdx + batchSize;
-                        const newData = res.slice(startIdx, endIdx);
-                        resolve(newData);
-                    }
-                });
+                // window.bizMOB.Network.requestTr({
+                //     "_sTrcode": "AGY0600",
+                //     "_oHeader": {
+                //         "is_cryption": false,
+                //         "error_code": "",
+                //         "error_text": "",
+                //         "info_text": "",
+                //         "login_session_id": "",
+                //         "message_version": "",
+                //         "result": false,
+                //         "trcode": "AGY0600"
+                //     },
+                //     "_oBody": {
+                //         "pageNum": "1",
+                //         "sortColumn": "ASSET_CODE",
+                //         "sortOrder": "ASC",
+                //         "typeFilter": typeFilter
+                //     },
+                //     "_fCallback": (resAGY0600) => {
+                //         const res = [JSON.parse(JSON.stringify(resAGY0600.body.assetList))];
+                //         const startIdx = page * batchSize;
+                //         const endIdx = startIdx + batchSize;
+                //         const newData = res.slice(startIdx, endIdx);
+                //         resolve(newData);
+                //     }
+                // });
             });
         };
 

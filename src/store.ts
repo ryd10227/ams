@@ -1,11 +1,9 @@
-// 인턴 3팀 윤서연
-
 import { createStore } from 'vuex';
 
 export default createStore({
   state: {
     dataList: [], // 입력된 데이터를 저장하는 배열
-    deviceInfo: null, // bizMOB 기기등록
+    deviceInfo: null, // 기기등록
     currentPath: '', // Path 설정
     selectedCategory: 'entire',
   },
@@ -18,7 +16,7 @@ export default createStore({
     deleteData(state, payload) {
       state.dataList = state.dataList.filter(item => !payload.includes(item));
     },
-    // HOM1000 현재 기기를 자산으로 등록하기 클릭 이벤트, $bizMOB.Device에서 가져온 디바이스 정보를 저장
+    // HOM1000 현재 기기를 자산으로 등록하기 클릭 이벤트, Device에서 가져온 디바이스 정보를 저장
     setDeviceInfo(state, deviceInfo) {
       state.deviceInfo = deviceInfo;
     },
