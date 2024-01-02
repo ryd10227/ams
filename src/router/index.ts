@@ -32,7 +32,7 @@ router.beforeEach((to, from, next) => {
   });
 
   // 라우터 이동 시 이동된 Path를 VueX Store에 저장
-  store.commit('setCurrentPath', to.path);
+  // store.commit('setCurrentPath', to.path);
 
   // 인자에 path를 넣으면 해당 path로 강제 이동 (Ex. 로그인 필요페이지 접근시 로그인 화면 호출 -- next("/login"))
   next();
