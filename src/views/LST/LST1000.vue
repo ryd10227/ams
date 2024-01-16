@@ -2,159 +2,161 @@
 <script lang="ts">
 
 import { defineComponent, computed, ref, reactive, onMounted, watch } from "vue";
-import { mapState, useStore } from 'vuex';
+import { mapMutations, mapState, useStore } from 'vuex';
+import axios from 'axios';
 
 export default defineComponent({
     setup() {
         // VueX store 사용
         const store = useStore();
 
-        // 이전 페이지(LST1000)에서 변경한 카테고리(hw/sw) 값을 가져옴
+        // 이전 페이지(ADD1000)에서 변경한 카테고리(hw/sw) 값을 가져옴
         const selectedCategory = computed(() => store.getters.selectedCategory);
 
         // 카테고리 변경 시 변경값을 store에 저장
         const changeCategory = (category) => { store.commit('setSelectedCategory', category); };
 
-        // const tableWrap = ref(null);
-        const displayedDataList = reactive([]);
-        const batchSize = 50; // 한 번에 표시할 아이템 개수
-        let isLoading = false;
-        let page = 0;
 
-        // 컴포넌트가 마운트 될 때 데이터를 불러옴
-        onMounted(() => { loadMoreData(); });
-
-        // 각 항목에 isChecked 속성 부여
-        displayedDataList.forEach(item => {
-            item.isChecked = ref(false);
+        watch(selectedCategory, (newCategory) => {
+            fetchData(newCategory); // Replace 'this' with the instance variable
         });
 
-        // 선택된 항목이 하나라도 있으면 삭제 버튼 활성화
-        const isDeleteButtonEnabled = computed(() => {
-            return displayedDataList.some(item => item.isChecked);
-        });
-
-        // 모든 항목이 선택되었는지 확인
-        const isAllChecked = ref(false);
-
-        // 전체선택 토글
-        const toggleSelectAll = () => {
-            displayedDataList.forEach(item => {
-                item.isChecked = !isAllChecked.value;
-            });
+        const fetchData = (selectedCategory) => {
+            switch (selectedCategory) {
+                case 'entire':
+                    // Code for 'entire' category
+                    break;
+                case 'hw':
+                    axios.get('https://assetmng-hwlee.koyeb.app/assets/hardwares')
+                        .then(response => {
+                            return response.data;
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        });
+                    break;
+                case 'sw':
+                    axios.get('https://assetmng-hwlee.koyeb.app/assets/softwares')
+                        .then(response => {
+                            // this.displayedDataList = response.data;
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        });
+                    break;
+                default:
+                // Default code, if selectedCategory doesn't match any of the cases
+            }
         };
 
-        // 카테고리가 변경되면 데이터를 초기화하고 다시 불러옴
-        watch(selectedCategory, () => {
-            page = 0;
-            displayedDataList.length = 0;
-            loadMoreData();
-        });
-
-        // 서버에서 가져온 아이템의 타입
-        interface Item {
-            ASSET_STATE: string;
-            RETURN_DATE: string;
-            ASSET_CODE: string;
-            CUR_USER: string;
-            DEPARTMENT: string;
-            TYPE: string;
-            ASSET_TYPE: string;
-            IS_DELETED: boolean;
-            HW_OR_SW: string;
-        }
-
-        // 서버에서 데이터 가져오기
-        const fetchDataFromServer = (typeFilter) => {
-            return new Promise((resolve) => {
-                // window.bizMOB.Network.requestTr({
-                //     "_sTrcode": "AGY0600",
-                //     "_oHeader": {
-                //         "is_cryption": false,
-                //         "error_code": "",
-                //         "error_text": "",
-                //         "info_text": "",
-                //         "login_session_id": "",
-                //         "message_version": "",
-                //         "result": false,
-                //         "trcode": "AGY0600"
-                //     },
-                //     "_oBody": {
-                //         "pageNum": "1",
-                //         "sortColumn": "ASSET_CODE",
-                //         "sortOrder": "ASC",
-                //         "typeFilter": typeFilter
-                //     },
-                //     "_fCallback": (resAGY0600) => {
-                //         const res = [JSON.parse(JSON.stringify(resAGY0600.body.assetList))];
-                //         const startIdx = page * batchSize;
-                //         const endIdx = startIdx + batchSize;
-                //         const newData = res.slice(startIdx, endIdx);
-                //         resolve(newData);
-                //     }
-                // });
-            });
-        };
-
-        // 선택된 카테고리가 바뀔 때마다 카테고리 필터에 맞춰 데이터를 다시 불러옴
-        const loadMoreData = () => {
-            if (isLoading) 
-            {
-            return;
-            }
-            isLoading = true;
-
-            let typeFilter = "ALL";
-            if (selectedCategory.value === 'hw') 
-            {
-            typeFilter = "HW";
-            }
-            else if (selectedCategory.value === 'sw') 
-            {
-            typeFilter = "SW";
-            }
-            fetchDataFromServer(typeFilter).then((res: any) => {
-                isLoading = false;
-                displayedDataList.push(...res[0]);
-                page++;
-            });
-        };
 
         return {
-            displayedDataList,
             selectedCategory,
             changeCategory,
-            isDeleteButtonEnabled,
-            isAllChecked,
-            toggleSelectAll,
         };
     },
     data() {
         return {
             selectedData: {},
             selectedOption: 'assetCode',
+            displayedDataList: [],
         };
     },
-    methods: {
-        deleteItems() {
-            const selectedItems = this.displayedDataList.filter(item => item.isChecked.value);
+    created() {
+        this.fetchData(this.selectedCategory);
+    },
+    computed: {
+        isDeleteButtonEnabled() {
+            // Check if any item is selected
+            return this.displayedDataList.some(item => item.isChecked);
+        },
+    },
 
-            if (selectedItems.length > 0) {
-                // 삭제 로직 (미완성)
+    methods: {
+        fetchData(selectedCategory) {
+            switch (selectedCategory) {
+                case 'entire':
+                    // Code for 'entire' category
+                    break;
+                case 'hw':
+                    axios.get('https://assetmng-hwlee.koyeb.app/assets/hardwares')
+                        .then(response => {
+                            this.displayedDataList = response.data;
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        });
+                    break;
+                case 'sw':
+                    axios.get('https://assetmng-hwlee.koyeb.app/assets/softwares')
+                        .then(response => {
+                            this.displayedDataList = response.data;
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        });
+                    break;
+                default:
+                // Default code, if selectedCategory doesn't match any of the cases
             }
+
+
+            // const options = {
+            //     params: {
+            //         // id: '2',
+            //         // name: 'name',
+            //     },
+            // };
+
+        },
+
+        selectItem(item) {
+            item.isChecked = !item.isChecked;
+            const selectedItems = this.displayedDataList.filter(item => item.isChecked);
+            console.log('item.hw_idx: ', item.hw_idx)
+        },
+
+        toggleSelectAll() {
+            this.displayedDataList.forEach(item => (item.isChecked = this.isAllChecked));
+        },
+
+        checkWillBeDeletedItems(item) {
+            const selectedItems = this.displayedDataList.filter(item => item.isChecked);
+            console.log(selectedItems)
+
+        },
+
+        deleteItems(item) {
+            const selectedItems = this.displayedDataList.filter(item => item.isChecked);
+            // console.log(selectedItems.data)
+            if (selectedItems.length > 0) {
+                const idxValue = parseInt(selectedItems[0].hw_idx);
+                // console.log(idxValue)
+                axios.delete('https://assetmng-hwlee.koyeb.app/assets/hardware', { params: { idx: idxValue } })
+                    // .then(response => {
+                    //     this.displayedDataList = response.data;
+                    // })
+                    .catch(err => {
+                        console.error(err);
+                    });
+            }
+
+            // Remove selected items from the displayedDataList
+            this.displayedDataList = this.displayedDataList.filter(item => !item.isChecked);
+
+            // Deselect all checkboxes
+            this.isAllChecked = false;
         },
 
         // 등록 버튼 클릭 이벤트. 등록 페이지로 이동
         goToAddPage() {
             const selectedCategory = this.selectedCategory;
             // selectedCategory가 'entire'일 시 자동으로 'hw'로 바꿔줌
-            if (selectedCategory === 'entire') 
-            {
+            if (selectedCategory === 'entire') {
                 this.$store.commit('setSelectedCategory', 'hw');
             }
             this.$router.push('/main/add');
         },
-
 
         // 아이템 상세보기
         showDetails(item) {
@@ -168,59 +170,6 @@ export default defineComponent({
         closeDetails() {
             this.tr_open = false;
         },
-
-        // 선택된 항목들을 Vuex 스토어에서 제거
-        // deleteItems() {
-        //     if (confirm('선택된 항목을 삭제할까요?\n삭제된 자산은 PC에서만 확인 가능합니다.')) {
-        //         // 체크박스 선택된 목록들
-        //         const selectedItems = this.dataList.filter(item => item.isChecked && item.assetType === `is${this.selectedCategory.toUpperCase()}` || this.selectedCategory === 'entire');
-
-        //         // deleteData mutation 호출
-        //         this.$store.commit('deleteData', selectedItems);
-
-        //         console.log('Deleted items:', selectedItems);
-        //         alert('삭제되었습니다.\n삭제된 자산은 PC에서 확인해주세요.')
-        //     }
-        // },
-
-        // sortByUser() {
-        //     const batchSize = 50; // 한 번에 표시할 아이템 개수
-        //     let page = 0;
-
-        //     let typeFilter = "ALL";
-        //     if (this.selectedCategory === 'hw') typeFilter = "HW";
-        //     else if (this.selectedCategory === 'sw') typeFilter = "SW";
-
-        //     new Promise((resolve) => {
-        //         window.bizMOB.Network.requestTr({
-        //             "_sTrcode": "AGY0600",
-        //             "_oHeader": {
-        //                 "is_cryption": false,
-        //                 "error_code": "",
-        //                 "error_text": "",
-        //                 "info_text": "",
-        //                 "login_session_id": "",
-        //                 "message_version": "",
-        //                 "result": false,
-        //                 "trcode": "AGY0600"
-        //             },
-        //             "_oBody": {
-        //                 "pageNum": "1",
-        //                 "sortColumn": "CUR_USER",
-        //                 "sortOrder": "ASC",
-        //                 "typeFilter": typeFilter
-        //             },
-        //             "_fCallback": (resAGY0600) => {
-        //                 const res = [JSON.parse(JSON.stringify(resAGY0600.body.assetList))];
-        //                 const startIdx = page * batchSize;
-        //                 const endIdx = startIdx + batchSize;
-        //                 const newData = res.slice(startIdx, endIdx);
-        //                 resolve(newData);
-        //             }
-        //         });
-        //     });
-        // },
-
     },
 });
 </script>

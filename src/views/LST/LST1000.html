@@ -25,10 +25,6 @@
                 <option value="manufacturer">제조사</option>
                 <option value="serialNum">S/N</option>
                 <option v-if="selectedCategory !== 'sw'" value="HWModel">모델명</option>
-                <option v-if="selectedCategory !== 'sw'" value="HWCPU">CPU</option>
-                <option v-if="selectedCategory !== 'sw'" value="HWSSD">SSD</option>
-                <option v-if="selectedCategory !== 'sw'" value="HWHDD">HDD</option>
-                <option v-if="selectedCategory !== 'sw'" value="HWMemory">메모리</option>
                 <option value="assetState">자산상태</option>
                 <option v-if="selectedCategory !== 'sw'" value="HWLocation">위치</option>
                 <option value="department">부서</option>
@@ -61,7 +57,8 @@
             <div class="table_top">
                 <button type="button" class="btn01 bt_sm" :disabled="!isDeleteButtonEnabled"
                     @click="deleteItems"><span>삭제</span></button>
-                <!-- <button type="button" class="btn011 bt_sm" @click="fetchDataFromServer"><span>테스트</span></button> -->
+                <button type="button" class="btn01 bt_sm"
+                    @click="checkWillBeDeletedItems"><span>테스트</span></button>
             </div>
 
             <!-- 자산 목록 -->
@@ -71,29 +68,32 @@
                         <col style="width: 32px;" />
                         <col style="width: 25%;" />
                         <col />
-                        <col style="width: 21%;" />
+                        <col style="width: 25%;" />
                     </colgroup>
                     <thead>
                         <tr>
                             <!-- 전체 체크박스 -->
-                            <th scope="col" class="col_chk"><input type="checkbox" id="" title="전체선택"
-                                    v-model="isAllChecked" @click="toggleSelectAll" /></th>
+                            <th scope="col" class="col_chk">
+                                <input type="checkbox" id="" title="전체선택" v-model="isAllChecked"
+                                    @change="toggleSelectAll" />
+                            </th>
                             <th scope="col" @click="sortByUser">사용자</th>
-                            <th scope="col" @click="sortByAssetCode">자산코드</th>
+                            <th scope="col" @click="sortByAssetCode">모델명</th>
                             <th scope="col" @click="sortByAssetState">자산상태</th>
                         </tr>
                     </thead>
                     <tbody :class="{ tr_open: tr_open }">
-                        <tr v-for="item in displayedDataList" :key="item.ASSET_CODE" @click="showDetails(item)"
+                        <tr v-for="item in displayedDataList" :key="item.assetCode" @click="showDetails(item)"
                             :class="{ tr_open: item.tr_open }">
                             <!-- 체크박스 -->
                             <td class="col_chk">
-                                <input type="checkbox" title="선택" @click.stop v-model="item.isChecked" />
+                                <!-- <input type="checkbox" title="선택" @click.stop v-model="item.isChecked" /> -->
+                                <input type="checkbox" title="선택" v-model="item.isChecked" @click.stop="selectItem(item)" />
                             </td>
-                            <!-- 컬럼명(사용자, 자산코드, 자산상태) -->
-                            <td>{{ item.CUR_USER }}</td>
-                            <td>{{ item.ASSET_CODE }}</td>
-                            <td>{{ item.ASSET_STATE }}</td>
+                            <!-- 컬럼명(사용자, 모델명, 자산상태) -->
+                            <td>{{ item.currentUser }}</td>
+                            <td>{{ item.assetName }}</td>
+                            <td>{{ item.status }}</td>
                         </tr>
                         <tr class="tr_detail">
                             <td colspan="4">

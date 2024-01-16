@@ -4,6 +4,7 @@
 import { computed, defineComponent, ref } from "vue";
 import { onBeforeRouteLeave } from "vue-router";
 import { mapMutations, useStore } from "vuex";
+import axios from 'axios';
 
 export default defineComponent({
     setup() {
@@ -69,9 +70,6 @@ export default defineComponent({
         };
     },
     methods: {
-        // VueX mutations을 사용하여 데이터 추가
-        ...mapMutations(['addData']),
-
         // 저장 버튼 클릭 이벤트
         saveData() {
             // 필수 입력 필드 유효성 검사
@@ -80,80 +78,54 @@ export default defineComponent({
                 return;
             }
 
-            // 현재 날짜 가져옴
-            const currentDate = new Date();
-            const formattedDate = `${currentDate.getFullYear()}/${currentDate.getMonth() + 1}/${currentDate.getDate()}`;
+            if (this.selectedCategory === "hw") {
+                const dataToSend = {
+                    asset: {
+                        // assetCode: this.inputAssetCode,
+                        assettype: this.inputDeviceType,
+                        sn: this.inputSerialNum,
+                        dept: this.inputDepartment,
+                        manufacturer: this.inputManufacturer,
+                        assetname: this.inputModel,
+                    },
+                    cpu: this.inputHWCPU,
+                    ssd: this.inputHWSSD,
+                    hdd: this.inputHWHDD,
+                    memory: this.inputHWMemory,
+                    status: this.inputAssetState,
+                    usageduration: this.inputPeriodOfUse,
+                    returndate: this.inputReturnedDate,
+                    // assignedDate: "2024-01-11T12:30:00",
+                    currentuser: this.inputUser,
+                    previoususer: this.inputExUser,
+                    location: this.inputHWLocation,
+                };
 
-            // 입력 데이터를 Vuex 스토어에 저장
-            const inputData = {
-                editType: 'isAdded',
-                currentDate: formattedDate,
-                assetType: this.selectedCategory === 'sw' ? 'isSW' : 'isHW',
-                inputAssetCode: this.inputAssetCode,
-                inputDeviceType: this.inputDeviceType,
-                inputManufacturer: this.inputManufacturer,
-                inputSerialNum: this.inputSerialNum,
-                ...((this.selectedCategory === 'hw') && {
-                    inputModel: this.inputModel,
-                    inputHWCPU: this.inputHWCPU,
-                    inputHWSSD: this.inputHWSSD,
-                    inputHWHDD: this.inputHWHDD,
-                    inputHWMemory: this.inputHWMemory,
-                    inputHWLocation: this.inputHWLocation,
-                }),
-                inputAssetState: this.inputAssetState,
-                inputDepartment: this.inputDepartment,
-                inputUser: this.inputUser,
-                inputExUser: this.inputExUser,
-                inputBuyDate: this.inputBuyDate,
-                inputPayDate: this.inputPayDate,
-                ...((this.selectedCategory === 'sw') && { inputSWExpireDate: this.inputSWExpireDate }),
-                inputHWExpectedReturnDate: this.inputHWExpectedReturnDate,
-                inputReturnedDate: this.inputReturnedDate,
-                inputPeriodOfUse: this.inputPeriodOfUse,
-                inputNote: this.inputNote,
-            };
+                axios.post('https://assetmng-hwlee.koyeb.app/assets/hardware', dataToSend)
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
 
-            this.addData(inputData);
+            else {
+                const dataToSend = {
+                    asset: {
+                        assettype: this.inputDeviceType,
+                        sn: this.inputSerialNum,
+                        dept: this.inputDepartment,
+                        manufacturer: this.inputManufacturer,
+                        assetname: this.inputModel,
+                    },
+                    expirydate: this.inputSWExpireDate,
+                };
 
-            // 선택한 탭이 '하드웨어'일 때 하드웨어 추가 로직
-            // if (this.selectedCategory === "hw") {
-            //     this.$bizMOB.Network.requestTr({
-            //         "_sTrcode": "AGY0605",
-            //         "_oHeader": {
-            //             "is_cryption": false,
-            //             "error_code": "",
-            //             "error_text": "",
-            //             "info_text": "",
-            //             "login_session_id": "",
-            //             "message_version": "",
-            //             "result": false,
-            //             "trcode": "AGY0605"
-            //         },
-            //         "_oBody": {
-            //             "assetArr": [{
-            //                 "assetCode": this.inputAssetCode,
-            //                 "assetState": this.inputAssetState,
-            //                 "assetType": "HW",
-            //                 "buyDate": this.inputBuyDate,
-            //                 "cpu": this.inputHWCPU,
-            //                 "curUser": this.inputUser,
-            //                 "department": this.inputDepartment,
-            //                 "dueDate": this.inputHWExpectedReturnDate,
-            //                 "exUser": this.inputExUser,
-            //                 "givenDate": this.inputPayDate,
-            //                 "hdd": this.inputHWHDD,
-            //                 "hwBrand": this.inputManufacturer,
-            //                 "hwLocation": this.inputHWLocation,
-            //                 "hwModelName": this.inputModel,
-            //                 "hwType": this.inputDeviceType,
-            //                 "memory": this.inputHWMemory,
-            //                 "notes": this.inputNote,
-            //                 "returnDate": "",
-            //                 "serial": this.inputSerialNum,
-            //                 "ssd": this.inputHWSSD
-            //             }]
-            //         },
+                axios.post('https://assetmng-hwlee.koyeb.app/assets/software', dataToSend)
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+
+            // 에러 처리
             //         "_fCallback": function (resAGY0605) {
             //             try {
             //                 if (resAGY0605.header.error_code == "ERR0651") {
@@ -171,60 +143,6 @@ export default defineComponent({
             //                 }
             //             }
             //         }
-            //     });
-            // }
-
-            // // 선택한 탭이 '소프트웨어'일 때 소프트웨어 추가 로직
-            // else {
-            //     this.$bizMOB.Network.requestTr({
-            //         "_sTrcode": "AGY0607",
-            //         "_oHeader": {
-            //             "is_cryption": false,
-            //             "error_code": "",
-            //             "error_text": "",
-            //             "info_text": "",
-            //             "login_session_id": "",
-            //             "message_version": "",
-            //             "result": false,
-            //             "trcode": "AGY0607"
-            //         },
-            //         "_oBody": {
-            //             "assetArr": [{
-            //                 "assetCode": this.inputAssetCode,
-            //                 "assetState": this.inputAssetState,
-            //                 "assetType": "SW",
-            //                 "buyDate": this.inputBuyDate,
-            //                 "curUser": this.inputUser,
-            //                 "department": this.inputDepartment,
-            //                 "dueDate": "",
-            //                 "exUser": this.inputExUser,
-            //                 "expireDate": this.inputSWExpireDate,
-            //                 "givenDate": this.inputPayDate,
-            //                 "returnDate": "",
-            //                 "serial": this.inputSerialNum,
-            //                 "swBrand": this.inputManufacturer,
-            //                 "swType": this.inputDeviceType,
-            //                 "notes": this.inputNote
-            //             }]
-            //         },
-            //         "_fCallback": function (resAGY0607) {
-            //             try {
-            //                 if (resAGY0607.header.error_code == "ERR6071") {
-            //                     alert("이미 존재하는 자산코드 혹은 시리얼넘버입니다.\n다시 입력해주세요.")
-            //                 }
-            //             }
-            //             catch (error) {
-            //                 if (error.response && error.response.status === 500) {
-            //                     // status 500: Internal Server Error
-            //                     alert("서버에 오류가 발생하였습니다. 잠시 후 다시 시도해주세요.");
-            //                 }
-            //                 else {
-            //                     // Other unexpected errors
-            //                     alert("예기치 못한 오류가 발생하였습니다.");
-            //                 }
-            //             }
-            //         }
-            //     });
             // }
             this.$router.replace('/main/list');
         },
@@ -232,16 +150,9 @@ export default defineComponent({
     },
 });
 </script>
+
+
 <!-- 
-            // VueX mutations을 사용하여 데이터 추가
-        ...mapMutations(['addData']),
-
-        // 현재 날짜 가져옴
-const currentDate = new Date();
-const formattedDate = `${currentDate.getFullYear()}/${currentDate.getMonth() + 1}/${currentDate.getDate()}`;
-
-// 입력 데이터를 Vuex 스토어에 저장
-const inputData = {
     editType: 'isAdded',
     currentDate: formattedDate,
     assetType: this.selectedCategory === 'sw' ? 'isSW' : 'isHW',
@@ -267,8 +178,4 @@ const inputData = {
     inputHWExpectedReturnDate: this.inputHWExpectedReturnDate,
     inputReturnedDate: this.inputReturnedDate,
     inputPeriodOfUse: this.inputPeriodOfUse,
-    inputNote: this.inputNote,
-};
-
-this.addData(inputData);
- -->
+    inputNote: this.inputNote, -->
